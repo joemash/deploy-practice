@@ -6,18 +6,19 @@
     - requirements 
 
 - name: Run the Django makemigrations command
-  sudo_user: "{{ application_user }}"
+  become: true
+  become_user: "{{ application_user }}"
   shell: . {{ virtualenv_path }}/bin/activate
          && . {{ virtualenv_path }}/bin/postactivate
          && cd {{ django_dir }}
          && python manage.py makemigrations --noinput --settings={{ django_settings_file }}
-  when: run_makemigrations
+  when: run_django_makemigrations
   tags: 
     - django 
     - makemigrations
 
 - name: Run Django migrations
-  sudo_user: "{{ application_user }}"
+  become_user: "{{ application_user }}"
   shell: . {{ virtualenv_path }}/bin/activate
          && . {{ virtualenv_path }}/bin/postactivate
          && cd {{ django_dir }}

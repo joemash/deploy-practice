@@ -36,7 +36,7 @@
     #(Web) Django
     - django_settings_file: '{{ application_name }}.live_settings'
     - django_secret_key: '8yll3$$$omye0+0v=tfb--el9&nqlrppgb96b*21p5isc_#s0u'
-    - run_django_syncdb: yes
+    - run_django_makemigrations: yes
     - run_django_migrations: yes
     - run_django_collectstatic: yes
     #(Web) Git
