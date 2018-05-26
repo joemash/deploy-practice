@@ -1,0 +1,8 @@
+[webservers] 
+ 52.15.198.47
+
+[dbservers]
+ 
+[memcachedservers]
+
+[nodeservers]
