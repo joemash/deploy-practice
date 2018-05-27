@@ -14,9 +14,9 @@
     - 'cd {{ virtualenv_path }}'
 
 - name: Create the virtualenv
-  command: virtualenv {{ virtualenv_path }} --no-site-packages
+  command: virtualenv --python=python3 {{ virtualenv_path }} --no-site-packages
            creates={{ virtualenv_path }}/bin/activate
-
+  
 - name: Create the application log folder
   file: path={{ application_log_dir }}
         owner={{ application_user }}

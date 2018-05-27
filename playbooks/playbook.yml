@@ -8,6 +8,8 @@
   remote_user: ubuntu
   pre_tasks:
     - raw: sudo apt-get -y install python-simplejson
+    - set_fact:
+        ansible_python_interpreter: /usr/bin/python3
   vars:
     #top level vars
     - application_user: ubuntu
@@ -51,33 +53,6 @@
     - nginx_static_dir: "{{ git_root }}/static/"
     - nginx_media_dir: "{{ git_root }}/media/"
     # Extras...
-    #Mysql
-    #- mysql_db_user:
-    #- mysql_db_name:
-    #- mysql_db_password:
-    #- mysql_port: 3306
-    #RDS
-    #- create_rds: yes
-    #- aws_zone: ''
-    #- aws_region: ''
-    #- rds_vpc_security_groups: ''
-    #- rds_subnet_group: ''
-    #- rds_port: ''
-    #- rds_instance: ''
-    #- rds_size: ''
-    #Mongo
-    #- mongo_db_name: ''
-    #- mongo_db_user: ''
-    #- mongo_db_group: ''
-    #- mongo_db_password: ''
-    #- mongo_db_host: ''
-    #- mongodb_package: ''
-    #Memcached
-    #- memcached_listen: 127.0.0.1
-    #- memcached_port: 11211
-    #- memcached_user: nobody
-    #- memcached_max_memory_mb: 64
-    #- memcached_max_connections: 1024
     #Backup (rudimentary)
     #- aws_access_key_id_for_backups: ''
     #- aws_secret_access_key_for_backups: ''
@@ -93,11 +68,6 @@
   roles:
     - postgresql
     - web
-    #- memcached
     #- backup
-    #- mysql
-    #- rds
-    #- nodejs
     #- celery
-    #- mongo
-    #- es
+    

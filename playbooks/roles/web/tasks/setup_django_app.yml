@@ -8,6 +8,7 @@
 - name: Run the Django makemigrations command
   become: true
   become_user: "{{ application_user }}"
+
   shell: . {{ virtualenv_path }}/bin/activate
          && . {{ virtualenv_path }}/bin/postactivate
          && cd {{ django_dir }}
