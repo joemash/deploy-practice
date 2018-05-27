@@ -1,0 +1,186 @@
+{% extends 'base.html'  %}
+
+
+
+{% block content %}
+
+<div class="container" style="margin-top:2%;">
+      <div class="row">
+        
+          <div class="col-xs-12">
+              <form class="payrolform" style="padding-top:2%;width: 75%;">
+                     {% csrf_token %}
+                    <div class="form-group">
+                      <label class="control-label col-sm-6" for="salary">Gross Salary</label>
+                      <div class="input-group">
+                         <span class="input-group-addon">Ksh</span>
+                         <input type="" id="salary" placeholder="Enter Salary" class="form-control salary">
+                      </div>
+                      
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-sm-6" for="nssf">NSSF</label>
+                      <select id="nssf">
+                          <option class="form-control">Old Rate</option>
+                          <option class="form-control">New Rate</option>
+                      </select>
+                      
+                    </div>
+
+
+                     
+                        <button class="btn btn-primary col-sm-offset-6 col-sm-6 ">Calculate</button>
+                   
+                  </form>
+           </div>
+      </div>
+
+      <br><br>
+<div class="row">
+    <div class="col-xs-12" >
+        <table class="table table-striped" style="width: 75%;">
+      <thead>
+          <tr>
+             <th>EARNINGS</th>
+             <th>AMOUNT</th>
+            
+             <th>DEDUCTIONS</th>
+             <th>AMOUNT</th>
+          </tr>
+
+      </thead>
+
+       <tbody>
+            <tr>
+              <td  >Basic Salary</td>
+              <td  class="gross_salary">0.00</td>
+              <td>PAYE</td>
+              <td class="netpaye">0.00</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>NSSF</td>
+              <td class="nssf">0.00</td>
+            </tr>  
+            <tr>
+              <td></td>
+              <td></td>
+              <td>NHIF</td>
+              <td class="nhif">0.00</td>
+
+            </tr> 
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+
+
+            </tr>
+             
+            <tr>
+              <td></td>
+              <td></td>
+              <td  >TOTAL DEDUCTIONS</td>
+              <td class="total_deduction">0.00</td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+
+            <tr>
+               <td></td>
+              <td></td>
+              <td>NET SALARY</td>
+              <td style="border-top:1px solid #000; color:#fff;" class="netpay">0.00</td>
+            </tr>
+
+       </tbody>
+
+       <tfoot>
+         
+
+       </tfoot>
+</table>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+  
+   $(document).on('submit', 'form.payrolform', function(e){
+         e.preventDefault(); 
+         var salary = parseFloat($('input.salary').val());
+      
+         if (isNaN(salary)) {
+
+            $('.gross_salary').text(0);
+
+         }
+         else{
+           
+            $('.gross_salary').text(salary.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')); 
+         }
+        
+
+         var request = $.ajax({
+                         type: "POST",
+                         url: "/",
+                         data :{salary:salary},
+                       });
+
+                     request.done(function(response) {
+                        var net_salary = response.salary;
+                        var netpaye = response.net_paye;
+                        var nhif = response.nhif;
+                        var total_deduction = nhif + netpaye + 200;
+
+                        $('#salary').val('');
+                        $('.netpay').addClass('label-primary');
+                        $('.nssf').text(200);
+
+                        $('.netpay').text(net_salary.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        $('.netpaye').text(netpaye.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        $('.nhif').text(nhif.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        $('.grosspay').text(salary.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                         $('.total_deduction').text(total_deduction.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        //window.location.href=response.url;
+                        //return false;
+
+                      });
+
+
+   });
+
+
+
+
+
+</script>
+
+
+
+
+
+
+{% endblock %}
