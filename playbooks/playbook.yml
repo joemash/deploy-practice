@@ -13,10 +13,8 @@
   vars:
     #top level vars
     - application_user: ubuntu
-    #for password, ie python -c "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('your-password')"
-    - application_user_password_hash:
     - application_group: ubuntu
-    - application_name: sito #  Has to be the name of your Django project.  Ie same name as the folder containing settings.py
+    - application_name: sito 
     - update_apt_cache: yes
     #Postgresql
     - db_name: trainingdb
